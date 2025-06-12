@@ -22,37 +22,31 @@ A modular Flask application for managing recipes. Users can add, edit, delete, s
 
 ## Setup & Run
 
-1. **Clone the repo** (or initialize and push local if empty):
+1. **Clone the repo** :
   
    git clone https://github.com/zein-l/aspire.git
-   cd my_recipes_app
+   cd ASPIRE_ZEINKHAMIS
 
 Create & activate a virtual environment:
-
-
-python3 -m venv venv
+python -m venv venv
 source venv/bin/activate      # Windows: venv\Scripts\activate
+
 Install dependencies:
-
-
 pip install -r requirements.txt
+
 # For development/testing:
 pip install -r requirements-dev.txt
 Configure environment variables:
 Copy .env.example to .env and edit:
-
-
 FLASK_ENV=development
 SECRET_KEY=your-secret-key
 DATABASE_URL=sqlite:///recipes.db
+
 Initialize the database:
-
-
 flask db init
 flask db migrate -m "Initial schema"
 flask db upgrade
+
 Run the server:
-
-
 python run.py
 Open your browser at http://localhost:5000 (or your LAN IP).
