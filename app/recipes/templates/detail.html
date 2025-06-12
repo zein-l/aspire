@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>{{ recipe.name }}</h1>
+  <div>
+    <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-secondary">Edit</a>
+    <form action="{{ url_for('recipes.delete_recipe', recipe_id=recipe.id) }}" method="post" style="display:inline;">
+      <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this recipe?')">Delete</button>
+    </form>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Details</h5>
+    <p><strong>Cuisine:</strong> {{ recipe.cuisine or '-' }}</p>
+    <p><strong>Prep Time:</strong> {{ recipe.prep_time or '-' }} minutes</p>
+    <p><strong>Status:</strong> <span class="badge badge-info">{{ recipe.status.value }}</span></p>
+    <hr>
+    <h5>Ingredients</h5>
+    <p>{{ recipe.ingredients }}</p>
+    <hr>
+    <h5>Instructions</h5>
+    <p>{{ recipe.instructions }}</p>
+  </div>
+</div>
+
+<div class="mb-4">
+  <h5>Change Status</h5>
+  <div class="btn-group">
+    {% for s in ['TO_WRITE', 'TO_TRY', 'MADE_BEFORE'] %}
+      {% if recipe.status.name != s %}
+      <form action="{{ url_for('recipes.change_status', recipe_id=recipe.id, status=s) }}" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-outline-primary">{{ s.replace('_', ' ').title() }}</button>
+      </form>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<a href="{{ url_for('recipes.list_recipes') }}" class="btn btn-link">&larr; Back to Recipes</a>
+{% endblock %}

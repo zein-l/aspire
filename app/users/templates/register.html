@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<h1>Register</h1>
+<form method="post">
+  {{ form.hidden_tag() }}
+
+  <div class="form-group">
+    {{ form.username.label }}
+    {{ form.username(class="form-control") }}
+    {% for err in form.username.errors %}
+      <small class="text-danger">{{ err }}</small>
+    {% endfor %}
+  </div>
+
+  <div class="form-group">
+    {{ form.email.label }}
+    {{ form.email(class="form-control") }}
+    {% for err in form.email.errors %}
+      <small class="text-danger">{{ err }}</small>
+    {% endfor %}
+  </div>
+
+  <div class="form-group">
+    {{ form.password.label }}
+    {{ form.password(class="form-control") }}
+    {% for err in form.password.errors %}
+      <small class="text-danger">{{ err }}</small>
+    {% endfor %}
+  </div>
+
+  <div class="form-group">
+    {{ form.confirm_password.label }}
+    {{ form.confirm_password(class="form-control") }}
+    {% for err in form.confirm_password.errors %}
+      <small class="text-danger">{{ err }}</small>
+    {% endfor %}
+  </div>
+
+  <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+</form>
+<p class="mt-2">
+  Already have an account? <a href="{{ url_for('users.login') }}">Login here</a>.
+</p>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipes{% endblock %}
+
+{% block content %}
+<h1>Recipes</h1>
+<form method="get" action="{{ url_for('recipes.list_recipes') }}" class="form-inline mb-4">
+  <input type="text" name="name" value="{{ request.args.get('name', '') }}" class="form-control mr-2" placeholder="Name">
+  <input type="text" name="ingredient" value="{{ request.args.get('ingredient', '') }}" class="form-control mr-2" placeholder="Ingredient">
+  <input type="text" name="cuisine" value="{{ request.args.get('cuisine', '') }}" class="form-control mr-2" placeholder="Cuisine">
+  <input type="number" name="prep_time" value="{{ request.args.get('prep_time', '') }}" class="form-control mr-2" placeholder="Max Prep Time">
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+{% if recipes %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cuisine</th>
+      <th>Prep Time</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recipe in recipes %}
+    <tr>
+      <td>{{ recipe.name }}</td>
+      <td>{{ recipe.cuisine or '-' }}</td>
+      <td>{{ recipe.prep_time or '-' }}</td>
+      <td><span class="badge badge-info">{{ recipe.status.value }}</span></td>
+      <td>
+        <a href="{{ url_for('recipes.edit_recipe', recipe_id=recipe.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+        <form action="{{ url_for('recipes.delete_recipe', recipe_id=recipe.id) }}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this recipe?')">Delete</button>
+        </form>
+        <div class="btn-group">
+          {% for s in ['TO_WRITE', 'TO_TRY', 'MADE_BEFORE'] %}
+            {% if recipe.status.name != s %}
+            <form action="{{ url_for('recipes.change_status', recipe_id=recipe.id, status=s) }}" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-sm btn-outline-primary">{{ s.replace('_', ' ').title() }}</button>
+            </form>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No recipes found.</p>
+{% endif %}
+{% endblock %}
