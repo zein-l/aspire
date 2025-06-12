@@ -18,7 +18,7 @@ A modular Flask application for managing recipes. Users can add, edit, delete, s
 ### Bonus
 - **Multi-user**: Register, log in, and manage your own recipes.  
 - **AI suggestions**: Endpoint that uses a simple HuggingFace pipeline to predict cuisine or suggest status based on ingredients.  
-- **Extras**: Easily add tags, ratings, image uploads, or custom features.
+
 
 ## Setup & Run
 
